@@ -3,7 +3,7 @@ services:
   www-fs-kogni:
     container_name: www-fs-kogni
     build: .
-    image: 'fsi/kogni-website:latest'
+    image: 'fsinf/kogni-website:latest'
     #restart: always
     hostname: 'www.fs-kogni.fsi.uni-tuebingen.de'
     ports:

@@ -3,7 +3,7 @@ services:
   default-page:
     container_name: default-page
     build: .
-    image: 'fsi/default-page:latest'
+    image: 'fsinf/default-page:latest'
     #restart: always
     hostname: 'null.fsi.uni-tuebingen.de'
     ports:
