@@ -2,7 +2,7 @@ version: '2'
 services:
   default-page:
     container_name: default-page
-    build: ./default-page
+    build: .
     image: 'fsi/default-page:latest'
     #restart: always
     hostname: 'null.fsi.uni-tuebingen.de'

@@ -1,9 +1,9 @@
 version: '2'
 services:
-  haproxy:
-    container_name: haproxy
-    build: ./haproxy
-    image: 'fsi-proxy:latest'
+  proxy:
+    container_name: proxy
+    build: .
+    image: 'fsi/proxy:latest'
     #restart: always
     hostname: 'proxy.fsi.uni-tuebingen.de'
     ports:

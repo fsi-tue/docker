@@ -2,7 +2,7 @@ version: '2'
 services:
   www-fs-kogni:
     container_name: www-fs-kogni
-    build: ./kogni-website
+    build: .
     image: 'fsi/kogni-website:latest'
     #restart: always
     hostname: 'www.fs-kogni.fsi.uni-tuebingen.de'
