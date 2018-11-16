@@ -1,0 +1,11 @@
+version: '2'
+services:
+  haproxy:
+    container_name: haproxy
+    build: ./haproxy
+    image: 'fsi-proxy:latest'
+    #restart: always
+    hostname: 'proxy.fsi.uni-tuebingen.de'
+    ports:
+      - '134.2.220.61:80:80'
+      - '134.2.220.61:443:443'

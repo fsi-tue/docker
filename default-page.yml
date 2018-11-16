@@ -1,0 +1,11 @@
+version: '2'
+services:
+  default-page:
+    container_name: default-page
+    build: ./default-page
+    image: 'fsi/default-page:latest'
+    #restart: always
+    hostname: 'null.fsi.uni-tuebingen.de'
+    ports:
+      - '134.2.220.61:8000:80'
+      - '134.2.220.61:8001:443'

@@ -1,0 +1,11 @@
+version: '2'
+services:
+  www-fs-kogni:
+    container_name: www-fs-kogni
+    build: ./kogni-website
+    image: 'fsi/kogni-website:latest'
+    #restart: always
+    hostname: 'www.fs-kogni.fsi.uni-tuebingen.de'
+    ports:
+      - '134.2.220.61:8002:80'
+      - '134.2.220.61:8003:443'
