@@ -4,8 +4,12 @@ services:
     container_name: proxy
     build: .
     image: 'fsinf/proxy:latest'
-    #restart: always
+    restart: always
     hostname: 'proxy.fsi.uni-tuebingen.de'
     ports:
       - '134.2.220.61:80:80'
       - '134.2.220.61:443:443'
+    volumes:
+      # reload the config when it was changed by typing 
+      # sudo docker kill -s HUP proxy
+      - ./config/:/usr/local/etc/haproxy/
