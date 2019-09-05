@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  web:
+    image: fsinf/fse:latest
+    command:  python3 manage.py runserver 0.0.0.0:8000
+    container_name: fse_django
+    volumes:
+      - ./fse:/code
+      - ./fse/static:/static
+      - ./script.sh:/code/script.sh
+    ports:
+      - "8000"
+    networks:
+      backend:
+        ipv4_address: 10.0.4.3
+
+  nginx:
+    image: fsinf/nginx
+    command: /usr/sbin/nginx -g 'daemon off;'
+    container_name: fse_nginx
+    ports:
+      - "134.2.220.61:8600:443"
+    volumes: 
+      - ./fse/fachschaftsempfaenger/static/:/static/
+      - /srv/docker-certificates/fachschaftsempfaenger.fsi.uni-tuebingen.de/:/etc/nginx/ssl:ro
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro 
+      - ./nginx-fse.conf:/etc/nginx/sites-enabled/nginx-fse.conf:ro
+      - /srv/docker/shared/nginx/security-headers.conf:/etc/nginx/shared/security-headers.conf:ro
+      - /srv/docker/shared/nginx/ssl.conf:/etc/nginx/shared/ssl.conf:ro
+    restart: always
+    networks:
+      backend:
+        ipv4_address: 10.0.4.2
+
+networks:
+  backend:
+    ipam:
+      config:
+        - subnet: 10.0.4.0/24
