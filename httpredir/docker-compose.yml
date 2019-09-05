@@ -1,0 +1,9 @@
+version: '2'
+services:
+  proxy:
+    container_name: http-redir
+    build: .
+    image: 'fsinf/http-redir:latest'
+    restart: always
+    ports:
+            - '134.2.220.61:8100:80'
