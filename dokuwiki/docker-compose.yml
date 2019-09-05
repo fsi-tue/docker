@@ -1,0 +1,16 @@
+version: '2'
+
+services:
+  app:
+    container_name: dokuwiki_nginx
+    image: fsinf/nginx
+    command: /usr/sbin/nginx -g 'daemon off;'
+    ports:
+      - "134.2.220.61:8150:443"
+      - "134.2.220.61:8444:80"
+    volumes:
+      - /srv/docker-certificates/wiki.fsi.uni-tuebingen.de/:/etc/nginx/ssl
+      - ./nginx-dokuwiki.conf:/etc/nginx/sites-enabled/nginx-dokuwiki.conf
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - /srv/docker/shared/nginx/ssl.conf:/etc/nginx/shared/ssl.conf
+    restart: always
