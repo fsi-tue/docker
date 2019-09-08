@@ -1,0 +1,43 @@
+From bfddde8d4f47f93c1b389e7e0cad439ab43ee3be Mon Sep 17 00:00:00 2001
+From: Michael Weiss <dev.primeos@gmail.com>
+Date: Thu, 3 Jan 2019 19:03:24 +0100
+Subject: [PATCH] Customize Pico (use Linux-AG as title and remove the
+ footer)
+
+---
+ config/config.yml         | 2 +-
+ themes/default/index.twig | 5 -----
+ 2 files changed, 1 insertion(+), 6 deletions(-)
+
+diff --git a/config/config.yml b/config/config.yml
+index 6a6ac19a..d47cc720 100644
+--- a/config/config.yml
++++ b/config/config.yml
+@@ -1,7 +1,7 @@
+ ##
+ # Basic
+ #
+-site_title: Pico                    # The title of your website
++site_title: Linux-AG                    # The title of your website
+ base_url: ~                         # Pico will try to guess its base URL, if this fails, override it here
+                                     #     Example: http://example.com/pico/
+ rewrite_url: ~                      # A boolean (true or false) indicating whether URL rewriting is forced
+diff --git a/themes/default/index.twig b/themes/default/index.twig
+index 4f527f90..19268539 100644
+--- a/themes/default/index.twig
++++ b/themes/default/index.twig
+@@ -61,11 +61,6 @@
+                     </a>
+                 {% endfor %}
+             </div>
+-            <p>
+-                <a href="http://picocms.org/">Pico</a> was made by <a href="http://gilbert.pellegrom.me">Gilbert Pellegrom</a>
+-                and is maintained by <a href="https://github.com/picocms/Pico/graphs/contributors">The Pico Community</a>.
+-                Released under the <a href="https://github.com/picocms/Pico/blob/master/LICENSE.md">MIT license</a>.
+-            </p>
+         </div>
+     </div>
+ 
+-- 
+2.22.0
+

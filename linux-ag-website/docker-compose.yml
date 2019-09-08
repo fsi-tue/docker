@@ -1,0 +1,20 @@
+version: '3.7'
+services:
+  linux-ag-website:
+    container_name: linux-ag-www
+    build: webserver
+    image: 'fsinf/linux-ag-www:latest'
+    #restart: always # TODO: Activate when production-ready
+    hostname: 'www.linux-ag.uni-tuebingen.de'
+    volumes:
+      - /srv/data/linux-ag/content:/var/www/linux-ag:ro
+    ports:
+      - '134.2.220.61:8060:80'
+      - '134.2.220.61:8061:443'
+  linux-ag-deployment:
+    container_name: linux-ag-cd
+    build: continuous-deployment
+    image: 'fsinf/linux-ag-cd:latest'
+    #restart: always # TODO: Activate when production-ready
+    volumes:
+      - /srv/data/linux-ag:/srv
