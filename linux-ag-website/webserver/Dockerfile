@@ -24,9 +24,10 @@ RUN cd /var/www/html \
 
 # Update the Apache configuration
 COPY linux-ag.conf /etc/apache2/sites-available/
-RUN a2enmod ssl && a2dissite 000-default && a2ensite linux-ag
+RUN a2enmod ssl && a2enmod rewrite && a2dissite 000-default && a2ensite linux-ag
 
 # Replace the content:
 RUN cd /var/www/html \
   && rm -r content \
-  && ln -s /var/www/linux-ag content
+  && ln -s /var/www/website content \
+  && ln -s /var/www/presentation presentation

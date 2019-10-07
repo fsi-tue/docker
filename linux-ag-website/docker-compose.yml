@@ -7,7 +7,8 @@ services:
     #restart: always # TODO: Activate when production-ready
     hostname: 'www.linux-ag.uni-tuebingen.de'
     volumes:
-      - /srv/data/linux-ag/content:/var/www/linux-ag:ro
+      - /srv/data/linux-ag/website:/var/www/website:ro
+      - /srv/data/linux-ag/presentation:/var/www/presentation:ro
       - /srv/data/linux-ag/certificates:/etc/apache2/ssl:ro
     ports:
       - '134.2.220.61:8060:80'
