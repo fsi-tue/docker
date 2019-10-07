@@ -22,6 +22,10 @@ RUN cd /var/www/html \
   && patch -p1 < Customize-Pico.patch \
   && rm Customize-Pico.patch
 
+# Update the Apache configuration
+COPY linux-ag.conf /etc/apache2/sites-available/
+RUN a2enmod ssl && a2dissite 000-default && a2ensite linux-ag
+
 # Replace the content:
 RUN cd /var/www/html \
   && rm -r content \

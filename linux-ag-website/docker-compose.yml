@@ -8,6 +8,7 @@ services:
     hostname: 'www.linux-ag.uni-tuebingen.de'
     volumes:
       - /srv/data/linux-ag/content:/var/www/linux-ag:ro
+      - /srv/data/linux-ag/certificates:/etc/apache2/ssl:ro
     ports:
       - '134.2.220.61:8060:80'
       - '134.2.220.61:8061:443'
