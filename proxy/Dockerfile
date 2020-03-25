@@ -1,4 +1,4 @@
-FROM haproxy:1.8-alpine
+FROM haproxy:2.0-alpine
 
 # TODO:
 RUN apk upgrade --update && \
