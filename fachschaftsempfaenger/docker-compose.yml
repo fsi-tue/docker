@@ -11,12 +11,14 @@ services:
       - ./script.sh:/code/script.sh
     ports:
       - "8000"
+    restart:
+      always
     networks:
       backend:
         ipv4_address: 10.0.4.3
 
   nginx:
-    image: fsinf/nginx
+    image: fsinf/nginx:latest
     command: /usr/sbin/nginx -g 'daemon off;'
     container_name: fse_nginx
     ports:
