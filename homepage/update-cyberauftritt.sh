@@ -2,10 +2,8 @@
 
 cd /srv/docker/homepage/
 
-# shut down the jekyll container
-docker-compose stop
-# TODO:
-#docker-compose rm -f
+# shut down the containers and remove them
+docker-compose down
 
 # pull new version of the code from github
 cd cyberauftritt-git
