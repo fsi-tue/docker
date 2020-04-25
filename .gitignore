@@ -1,2 +1,5 @@
 # Vim
 *.swp
+
+# environment files (e.g. for docker-compose)
+.env*
