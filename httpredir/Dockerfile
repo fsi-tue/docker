@@ -1,4 +1,4 @@
-FROM nginx:stable
+FROM nginx:mainline-alpine
 
 #RUN rm /etc/nginx/sites-enabled/default.conf
 
