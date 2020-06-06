@@ -3,7 +3,7 @@ version: "2"
 services:
   server:
     container_name: gitea_server
-    image: gitea/gitea:1.11.4
+    image: gitea/gitea:1
     env_file:
       - .env_server
     restart: always
