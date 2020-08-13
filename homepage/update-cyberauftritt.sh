@@ -13,6 +13,6 @@ mkdir _site
 chown 1000 -R _site
 
 cd ..
-docker-compose up -d
+docker-compose up -d --build
 
 exit 0
