@@ -1,0 +1,6 @@
+# automatically build the nginx image we use for a variety of services
+# (without invoking docker build ...)
+
+nginx:
+    build: .
+    command: /bin/sleep 1
