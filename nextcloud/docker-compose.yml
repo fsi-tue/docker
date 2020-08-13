@@ -25,7 +25,7 @@ networks:
 services:
   database:
     container_name: nextcloud_database
-    image: postgres:11.2-alpine
+    image: postgres:11.7-alpine
     mem_limit: 1g         # version 2 only
     env_file:
       # another account for nextcloud is created, config can be found in the config.php in the config folder in nextcloud volume
@@ -73,8 +73,7 @@ services:
     container_name: nextcloud_redis
     image: redis:latest
     mem_limit: 2g
-    ports:
-      - 6379:6379
+    restart: always
     networks:
       backend:
         ipv4_address: 10.0.1.5
