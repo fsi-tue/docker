@@ -1,0 +1,39 @@
+version: '3.6'
+
+services:
+    web:
+        image: fsinf/nginx:latest
+        container_name: kki_nginx
+        ports:
+          - "134.2.220.61:8750:443"
+        volumes:
+          - /srv/docker-certificates/kki.fsi.uni-tuebingen.de/:/etc/nginx/ssl:ro
+          - ./nginx.conf:/etc/nginx/nginx.conf:ro
+          - ./nginx-kki.conf:/etc/nginx/sites-enabled/nginx-kki.conf:ro
+          - /srv/docker/shared/nginx/ssl.conf:/etc/nginx/shared/ssl.conf:ro
+          - /srv/docker/shared/nginx/security-headers.conf:/etc/nginx/shared/security-headers.conf:ro
+          - /srv/data/kki/data:/var/www/data:ro
+        links:
+          - php
+        restart: always
+    php:
+        build: .
+        image: fsinf/kki-php:latest
+        container_name: kki_php
+        user: www-data
+        volumes:
+          - /srv/data/kki/data:/var/www/data:ro
+        restart: always
+        links:
+          - db
+    db:
+        image: mariadb:10
+        container_name: kki_db
+        restart: always
+        environment:
+          - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+          - MYSQL_USER=kki
+          - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+          - MYSQL_DATABASE=kneipenkulturinterface
+        volumes:
+          - /srv/data/kki/db:/var/lib/mysql
