@@ -2,6 +2,7 @@
 version: '3.2'
 services:
  jekyll:
+   build: ./cyberauftritt-git
    container_name: cyberauftritt_jekyll
    image: fsinf/cyberauftritt:latest
    command: bundle exec jekyll build --config /etc/deployment-config.yml,_config.yml
