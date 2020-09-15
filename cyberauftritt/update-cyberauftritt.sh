@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd /srv/docker/homepage/
+cd /srv/docker/cyberauftritt
 
 # build the container before restarting (this will reduce downtime)
 cd cyberauftritt-git
