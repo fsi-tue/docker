@@ -14,8 +14,8 @@ services:
     restart: always
 
   app:
-    image: nabo.codimd.dev/hackmdio/hackmd:2.2.0
-    container_name: codimd_up_container
+    image: nabo.codimd.dev/hackmdio/hackmd:2.3.2
+    container_name: codimd_container
     environment:
       - CMD_DOMAIN=pad.fsi.uni-tuebingen.de
       - CMD_USECDN=false
@@ -47,7 +47,7 @@ services:
 
   nginx:
     image: fsinf/nginx:latest
-    container_name: codimd_up_nginx
+    container_name: codimd_nginx
     ports:
       - "134.2.220.61:8010:443"
     volumes:
