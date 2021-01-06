@@ -39,7 +39,7 @@ services:
   app:
     container_name: nextcloud_container
     image: nextcloud:latest
-    cpuset: 0,1
+    cpuset: 0,1,4,5
     mem_limit: 4g
     environment:
       - REDIS_HOST=redis
