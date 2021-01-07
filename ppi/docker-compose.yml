@@ -1,0 +1,38 @@
+version: '3.6'
+
+services:
+  nginx:
+    container_name: ppi_nginx
+    image: fsinf/nginx:latest
+    ports:
+      - 9065:443
+    volumes:
+      - /srv/docker-certificates/ppi.fsi.uni-tuebingen.de/:/etc/nginx/ssl:ro
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx-ppi.conf:/etc/nginx/sites-enabled/nginx-ppi.conf
+      - /srv/docker/shared/nginx/ssl.conf:/etc/nginx/shared/ssl.conf:ro
+      - /srv/docker/shared/nginx/security-headers.conf:/etc/nginx/shared/security-headers.conf:ro
+      - /srv/data/ppi/code:/var/www/html:ro
+    restart: always
+    links:
+      - php
+  php:
+    # Postgres drivers are required
+    build: .
+    image: fsinf/php-7-fpm-psql:latest
+    container_name: ppi_php
+    volumes:
+      - /srv/data/ppi/code:/var/www/html
+      - /srv/data/ppi/data:/var/www/html/exam_protocols/
+      - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+    restart: always
+    links:
+      - db
+  db:
+    container_name: ppi_db
+    image: postgres:11-alpine
+    env_file:
+      - .env
+    volumes:
+      - /srv/data/ppi/database:/var/lib/postgresql/data
+    restart: always
