@@ -1,0 +1,21 @@
+web:
+    image: fsinf/nginx:latest
+    ports:
+        - "134.2.220.61:8770:443"
+    volumes:
+        - ./nginx.conf:/etc/nginx/nginx.conf:ro
+        - ./nginx-eei.conf:/etc/nginx/sites-enabled/nginx-eei.conf:ro
+        - /srv/data/eei/git:/var/www/html:ro
+        - /srv/docker-certificates/eei.fsi.uni-tuebingen.de/:/etc/nginx/ssl:ro
+        - /srv/docker/shared/nginx/ssl.conf:/etc/nginx/shared/ssl.conf:ro
+        - /srv/docker/shared/nginx/security-headers.conf:/etc/nginx/shared/security-headers.conf:ro
+    links:
+        - php
+    restart: always
+php:
+    image: php:7-fpm-buster
+    user: www-data
+    volumes:
+        - /srv/data/eei/eei-registration:/var/www/eei-registration
+        - /srv/data/eei/git:/var/www/html:ro
+    restart: always
