@@ -9,7 +9,7 @@ services:
    volumes:
      - ./cyberauftritt-git:/srv/jekyll
      - ./deployment-config.yml:/etc/deployment-config.yml:ro
- app:
+ nginx:
     image: fsinf/nginx:latest
     command: /usr/sbin/nginx -g 'daemon off;'
     container_name: cyberauftritt_nginx

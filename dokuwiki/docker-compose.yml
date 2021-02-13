@@ -1,7 +1,7 @@
 version: '2'
 
 services:
-  app:
+  nginx:
     container_name: dokuwiki_nginx
     image: fsinf/nginx
     command: /usr/sbin/nginx -g 'daemon off;'

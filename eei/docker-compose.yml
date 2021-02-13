@@ -1,4 +1,4 @@
-web:
+nginx:
     image: fsinf/nginx:latest
     ports:
         - "134.2.220.61:8770:443"

@@ -1,7 +1,7 @@
 version: '3.6'
 
 services:
-    web:
+    nginx:
         image: fsinf/nginx:latest
         container_name: kki_nginx
         ports:
