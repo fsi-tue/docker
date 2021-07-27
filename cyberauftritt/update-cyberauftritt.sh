@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DOCKER_COMPOSE_PATH=/usr/local/bin
+DOCKER_COMPOSE_PATH=/usr/bin
 
 cd /srv/docker/cyberauftritt
 
@@ -8,7 +8,7 @@ cd /srv/docker/cyberauftritt
 cd cyberauftritt-git
 git pull origin master
 cd ..
-$DOCKER_COMPOSE_PATH/docker-compose build --quiet
+$DOCKER_COMPOSE_PATH/docker-compose build
 
 # shut down the containers and remove them
 $DOCKER_COMPOSE_PATH/docker-compose down
