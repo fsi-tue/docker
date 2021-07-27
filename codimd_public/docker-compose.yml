@@ -1,7 +1,7 @@
 version: '3.2'
 services:
   database:
-    image: postgres:12.2-alpine
+    image: postgres:12.6-alpine
     container_name: codimd_public_database
     environment:
       - POSTGRES_USER=hackmd
@@ -15,7 +15,7 @@ services:
     restart: always
 
   app:
-    image: nabo.codimd.dev/hackmdio/hackmd:2.3.2
+    image: hackmdio/hackmd:2.4.1
     container_name: codimd_public_container
     environment:
       - CMD_DOMAIN=notes.fsi.uni-tuebingen.de

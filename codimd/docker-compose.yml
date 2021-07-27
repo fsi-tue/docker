@@ -1,7 +1,7 @@
 version: '3.2'
 services:
   database:
-    image: postgres:12.2-alpine
+    image: postgres:12.6-alpine
     environment:
       - POSTGRES_USER=hackmd
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
@@ -14,7 +14,7 @@ services:
     restart: always
 
   app:
-    image: nabo.codimd.dev/hackmdio/hackmd:2.3.2
+    image: nabo.codimd.dev/hackmdio/hackmd:2.4.1
     container_name: codimd_container
     environment:
       - CMD_DOMAIN=pad.fsi.uni-tuebingen.de
@@ -26,7 +26,7 @@ services:
       - CMD_LDAP_SEARCHFILTER=(&(|(objectclass=posixAccount))(uid={{username}})(!(loginShell=/usr/sbin/nologin)))
       - CMD_LDAP_USERFIELDID=uid
       - CMD_LDAP_USERNAMEFIELD=cn
-      - CMD_LDAP_TLS_CA=/etc/ssl/certs/T-TeleSec_GlobalRoot_Class_2.pem
+      - CMD_LDAP_TLS_CA=/etc/ssl/certs/ISRG_Root_X1.pem
       - CMD_EMAIL=false
       - CMD_ALLOW_GRAVATAR=false
       - CMD_ALLOW_ANONYMOUS=false
