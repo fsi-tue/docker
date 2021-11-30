@@ -30,7 +30,7 @@ services:
       - db
   db:
     container_name: ppi_db
-    image: postgres:11-alpine
+    image: postgres:12-alpine
     env_file:
       - .env
     volumes:
