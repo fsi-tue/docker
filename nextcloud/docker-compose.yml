@@ -45,6 +45,7 @@ services:
       - REDIS_HOST=redis
     volumes:
       - data:/var/www/html
+      - ./php.ini:/usr/local/etc/php/conf.d/zzz-custom.ini
     restart: always
     depends_on:
       - database
