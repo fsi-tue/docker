@@ -1,0 +1,39 @@
+version: '3.6'
+
+services:
+  nginx:
+    container_name: rri_nginx
+    image: fsinf/nginx:latest
+    ports:
+      - 9068:443
+    volumes:
+      - /srv/docker-certificates/rri.fsi.uni-tuebingen.de/:/etc/nginx/ssl:ro
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx-rri.conf:/etc/nginx/sites-enabled/nginx-rri.conf
+      - /srv/docker/shared/nginx/ssl.conf:/etc/nginx/shared/ssl.conf:ro
+      - /srv/docker/shared/nginx/security-headers.conf:/etc/nginx/shared/security-headers.conf:ro
+      - /srv/data/rri/code:/var/www/html:ro
+      - /srv/data/rri/data:/var/www/html/uploaded_images:ro
+    restart: always
+    links:
+      - php
+  php:
+    # Postgres drivers are required
+    build: .
+    image: fsinf/php-7-fpm-psql:latest
+    container_name: rri_php
+    volumes:
+      - /srv/data/rri/code:/var/www/html
+      - /srv/data/rri/data:/var/www/html/uploaded_images/
+      - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+    restart: always
+    links:
+      - db
+  db:
+    container_name: rri_db
+    image: postgres:12-alpine
+    env_file:
+      - .env
+    volumes:
+      - /srv/data/rri/database:/var/lib/postgresql/data
+    restart: always
