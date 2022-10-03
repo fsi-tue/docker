@@ -15,7 +15,7 @@ services:
     restart: always
 
   app:
-    image: hackmdio/hackmd:2.4.1
+    image: hackmdio/hackmd:2.4.2
     container_name: codimd_public_container
     environment:
       - CMD_DOMAIN=notes.fsi.uni-tuebingen.de
