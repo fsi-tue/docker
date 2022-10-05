@@ -26,7 +26,6 @@ services:
   database:
     container_name: nextcloud_database
     image: postgres:12-alpine
-    mem_limit: 1g         # version 2 only
     env_file:
       # another account for nextcloud is created, config can be found in the config.php in the config folder in nextcloud volume
       - .env_database
@@ -39,8 +38,6 @@ services:
   app:
     container_name: nextcloud_container
     image: nextcloud:stable
-    cpuset: 0,1,4,5
-    mem_limit: 4g
     environment:
       - REDIS_HOST=redis
     volumes:
@@ -60,6 +57,7 @@ services:
     volumes:
       - data:/var/www/html
       - /srv/docker-certificates/cloud.fsi.uni-tuebingen.de/:/etc/nginx/ssl:ro
+      - /srv/docker-certificates/cloud.fsi.uni-tuebingen.de_ecc/:/etc/nginx/ssl-ecc:ro
       - ./nginx.conf:/etc/nginx/nginx.conf
       - ./nginx-nextcloud.conf:/etc/nginx/sites-enabled/nginx-nextcloud.conf
       - /srv/docker/shared/nginx/ssl.conf:/etc/nginx/shared/ssl.conf:ro
@@ -76,3 +74,10 @@ services:
     networks:
       backend:
         ipv4_address: 10.0.1.5
+  collabora:
+    container_name: nextcloud_collabora
+    image: collabora/code
+    restart: always
+    networks:
+      backend:
+        ipv4_address: 10.0.1.6
