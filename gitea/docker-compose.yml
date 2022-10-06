@@ -36,6 +36,7 @@ services:
      - "134.2.220.61:8200:443"
    volumes:
      - /srv/docker-certificates/git.fsi.uni-tuebingen.de/:/etc/nginx/ssl:ro
+     - /srv/docker-certificates/git.fsi.uni-tuebingen.de_ecc/:/etc/nginx/ssl-ecc:ro
      - ./nginx.conf:/etc/nginx/nginx.conf:ro
      - ./nginx-gitea.conf:/etc/nginx/sites-enabled/nginx-codimd.conf:ro
      - /srv/docker/shared/nginx/ssl.conf:/etc/nginx/shared/ssl.conf:ro
