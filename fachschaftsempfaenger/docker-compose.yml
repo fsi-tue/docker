@@ -2,7 +2,7 @@ version: '3'
 
 services:
   web:
-    image: fsinf/fse:latest
+    image: fsinf/fachschaftsempfaenger:latest
     build: ./fse
     command:  python3 manage.py runserver 0.0.0.0:8000
     container_name: fse_django
