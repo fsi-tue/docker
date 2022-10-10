@@ -14,7 +14,7 @@ services:
     restart: always
 
   app:
-    image: nabo.codimd.dev/hackmdio/hackmd:2.4.1
+    image: hackmdio/hackmd:2.4.2
     container_name: codimd_container
     environment:
       - CMD_DOMAIN=pad.fsi.uni-tuebingen.de
