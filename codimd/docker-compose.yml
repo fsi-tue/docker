@@ -21,12 +21,15 @@ services:
       - CMD_USECDN=false
       - CMD_PROTOCOL_USESSL=true
       - CMD_DB_URL=${CMD_DB_URL}
-      - CMD_LDAP_URL=ldaps://ldap.fsi.uni-tuebingen.de
-      - CMD_LDAP_SEARCHBASE=dc=fsi,dc=uni-tuebingen,dc=de
-      - CMD_LDAP_SEARCHFILTER=(&(|(objectclass=posixAccount))(uid={{username}})(!(loginShell=/usr/sbin/nologin)))
-      - CMD_LDAP_USERFIELDID=uid
-      - CMD_LDAP_USERNAMEFIELD=cn
-      - CMD_LDAP_TLS_CA=/etc/ssl/certs/ISRG_Root_X1.pem
+      - CMD_OAUTH2_USER_PROFILE_URL=https://aai.fsi.uni-tuebingen.de/auth/realms/FSI_Account/protocol/openid-connect/userinfo
+      - CMD_OAUTH2_USER_PROFILE_USERNAME_ATTR=preferred_username
+      - CMD_OAUTH2_USER_PROFILE_DISPLAY_NAME_ATTR=name
+      - CMD_OAUTH2_USER_PROFILE_EMAIL_ATTR=email
+      - CMD_OAUTH2_TOKEN_URL=https://aai.fsi.uni-tuebingen.de/auth/realms/FSI_Account/protocol/openid-connect/token
+      - CMD_OAUTH2_AUTHORIZATION_URL=https://aai.fsi.uni-tuebingen.de/auth/realms/FSI_Account/protocol/openid-connect/auth
+      - CMD_OAUTH2_CLIENT_ID=hedgedoc
+      - CMD_OAUTH2_CLIENT_SECRET=${CMD_OAUTH2_CLIENT_SECRET}
+      - CMD_OAUTH2_PROVIDERNAME=FSI SSO
       - CMD_EMAIL=false
       - CMD_ALLOW_GRAVATAR=false
       - CMD_ALLOW_ANONYMOUS=false
@@ -34,7 +37,7 @@ services:
       - CMD_ALLOW_FREEURL=true
       - CMD_DEFAULT_PERMISSION=limited
       - CMD_ALLOW_PDF_EXPORT=true
-      - CMD_SESSION_LIFE=2592000000
+      - CMD_SESSION_LIFE=1209600000
     volumes:
       - ./config.json:/home/hackmd/app/config.json
       - /srv/data/codimd/persistuploads:/home/hackmd/app/public/uploads
