@@ -1,6 +1,8 @@
 # automatically build the nginx image we use for a variety of services
 # (without invoking docker build ...)
+version: "3"
 
-nginx:
+services:
+  nginx:
     build: .
-    command: /bin/sleep 1
+    image: fsinf/nginx
