@@ -1,3 +1,0 @@
-[submodule "jitsi-meet-git"]
-	path = jitsi-meet-git
-	url = https://github.com/jitsi/docker-jitsi-meet.git
