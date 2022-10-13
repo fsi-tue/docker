@@ -17,9 +17,9 @@ services:
     links:
       - php
   php:
-    # Postgres drivers are required
+    # MYSQL drivers, zip and sendmail are required
     build: .
-    image: fsinf/php-7-fpm-psql:latest
+    image: fsinf/php-8.0-fpm-ppi:latest
     container_name: ppi_php
     volumes:
       - /srv/data/ppi/code:/var/www/html
@@ -30,9 +30,9 @@ services:
       - db
   db:
     container_name: ppi_db
-    image: postgres:12-alpine
+    image: mariadb:latest
     env_file:
       - .env
     volumes:
-      - /srv/data/ppi/database:/var/lib/postgresql/data
+      - /srv/data/ppi/database:/var/lib/mysql
     restart: always
