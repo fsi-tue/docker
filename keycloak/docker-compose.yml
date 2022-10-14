@@ -1,0 +1,52 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:14
+    volumes:
+      - /srv/data/keycloak/database:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB=keycloak
+      POSTGRES_USER=keycloak
+      POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    restart: always
+  keycloak:
+    image: fsinf/keycloak:latest
+    build: .
+    environment:
+      KC_DB=postgres
+      KC_DB_URL=jdbc:postgresql://postgres:5432/keycloak
+      KC_DB_DATABASE=keycloak
+      KC_DB_USER=keycloak
+      KC_DB_SCHEMA=public
+      KC_DB_PASSWORD=${POSTGRES_PASSWORD}
+      KEYCLOAK_ADMIN=${KEYCLOAK_ADMIN}
+      KEYCLOAK_ADMIN_PASSWORD=${KEYCLOAK_ADMIN_PASSWORD}
+      PROXY_ADDRESS_FORWARDING='true'
+      KC_HTTP_ENABLED='true'
+      KC_HTTP_PORT=8080
+      KC_HOSTNAME=aai.fsi.uni-tuebingen.de
+      KC_HOSTNAME_STRICT='false'
+      KC_HTTPS_PORT=443
+      KC_PROXY=edge
+    volumes:
+      - /srv/data/keycloak/data:/data
+    ports:
+      - 8080:8080
+    depends_on:
+      - postgres
+    entrypoint: /opt/keycloak/bin/kc.sh start --optimized
+    restart: always
+  nginx:
+    container_name: keycloak_nginx
+    image: fsinf/nginx:latest
+    ports:
+      - 9041:443
+    volumes:
+      - /srv/docker-certificates/aai.fsi.uni-tuebingen.de/:/etc/nginx/ssl:ro
+      - /srv/docker-certificates/aai.fsi.uni-tuebingen.de_ecc/:/etc/nginx/ssl-ecc:ro
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx-keycloak.conf:/etc/nginx/sites-enabled/nginx-keycloak.conf
+      - /srv/docker/shared/nginx/ssl.conf:/etc/nginx/shared/ssl.conf:ro
+      - /srv/docker/shared/nginx/security-headers.conf:/etc/nginx/shared/security-headers.conf:ro
+    restart: always
