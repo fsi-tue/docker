@@ -6,29 +6,29 @@ services:
     volumes:
       - /srv/data/keycloak/database:/var/lib/postgresql/data
     environment:
-      POSTGRES_DB=keycloak
-      POSTGRES_USER=keycloak
-      POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=keycloak
+      - POSTGRES_USER=keycloak
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     restart: always
   keycloak:
     image: fsinf/keycloak:latest
     build: .
     environment:
-      KC_DB=postgres
-      KC_DB_URL=jdbc:postgresql://postgres:5432/keycloak
-      KC_DB_DATABASE=keycloak
-      KC_DB_USER=keycloak
-      KC_DB_SCHEMA=public
-      KC_DB_PASSWORD=${POSTGRES_PASSWORD}
-      KEYCLOAK_ADMIN=${KEYCLOAK_ADMIN}
-      KEYCLOAK_ADMIN_PASSWORD=${KEYCLOAK_ADMIN_PASSWORD}
-      PROXY_ADDRESS_FORWARDING='true'
-      KC_HTTP_ENABLED='true'
-      KC_HTTP_PORT=8080
-      KC_HOSTNAME=aai.fsi.uni-tuebingen.de
-      KC_HOSTNAME_STRICT='false'
-      KC_HTTPS_PORT=443
-      KC_PROXY=edge
+      - KC_DB=postgres
+      - KC_DB_URL=jdbc:postgresql://postgres:5432/keycloak
+      - KC_DB_DATABASE=keycloak
+      - KC_DB_USER=keycloak
+      - KC_DB_SCHEMA=public
+      - KC_DB_PASSWORD=${POSTGRES_PASSWORD}
+      - KEYCLOAK_ADMIN=${KEYCLOAK_ADMIN}
+      - KEYCLOAK_ADMIN_PASSWORD=${KEYCLOAK_ADMIN_PASSWORD}
+      - PROXY_ADDRESS_FORWARDING='true'
+      - KC_HTTP_ENABLED='true'
+      - KC_HTTP_PORT=8080
+      - KC_HOSTNAME=aai.fsi.uni-tuebingen.de
+      - KC_HOSTNAME_STRICT='false'
+      - KC_HTTPS_PORT=443
+      - KC_PROXY=edge
     volumes:
       - /srv/data/keycloak/data:/data
     ports:
