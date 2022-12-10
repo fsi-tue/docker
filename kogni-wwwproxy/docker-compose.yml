@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  nginx:
+    container_name: wwwfskogniproxy_nginx
+    image: fsinf/nginx
+    ports:
+      - "134.2.220.61:8467:443"
+    volumes:
+      - /srv/docker-certificates/www.fs-kogni.uni-tuebingen.de/:/etc/nginx/ssl
+      - /srv/docker-certificates/www.fs-kogni.uni-tuebingen.de_ecc/:/etc/nginx/ssl-ecc
+      - ./nginx-wwwproxy.conf:/etc/nginx/sites-enabled/nginx-wwwproxy.conf
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - /srv/docker/shared/nginx/ssl.conf:/etc/nginx/shared/ssl.conf
+      - /srv/docker/shared/nginx/security-headers.conf:/etc/nginx/shared/security-headers.conf:ro
+    restart: always
