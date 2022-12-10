@@ -1,0 +1,1 @@
+find -type f -name docker-compose.yml | xargs  -L 1 -I file docker-compose -f file up -d --force-recreate --no-deps nginx
