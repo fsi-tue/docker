@@ -13,7 +13,7 @@ nginx:
         - php
     restart: always
 php:
-    image: php:8.1-fpm-buster
+    image: php:8.1-fpm-alpine
     user: www-data
     volumes:
         - /srv/data/eei/eei-registration:/var/www/eei-registration
