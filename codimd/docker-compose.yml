@@ -1,7 +1,7 @@
 version: '3.2'
 services:
   database:
-    image: postgres:12-alpine
+    image: postgres:13-alpine
     environment:
       - POSTGRES_USER=hackmd
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
@@ -14,7 +14,7 @@ services:
     restart: always
 
   app:
-    image: hackmdio/hackmd:2.4.2
+    image: quay.io/hedgedoc/hedgedoc:1.9.6
     container_name: codimd_container
     environment:
       - CMD_DOMAIN=pad.fsi.uni-tuebingen.de
@@ -25,6 +25,7 @@ services:
       - CMD_OAUTH2_USER_PROFILE_USERNAME_ATTR=preferred_username
       - CMD_OAUTH2_USER_PROFILE_DISPLAY_NAME_ATTR=name
       - CMD_OAUTH2_USER_PROFILE_EMAIL_ATTR=email
+      - CMD_OAUTH2_SCOPE=openid
       - CMD_OAUTH2_TOKEN_URL=https://aai.fsi.uni-tuebingen.de/auth/realms/FSI_Account/protocol/openid-connect/token
       - CMD_OAUTH2_AUTHORIZATION_URL=https://aai.fsi.uni-tuebingen.de/auth/realms/FSI_Account/protocol/openid-connect/auth
       - CMD_OAUTH2_CLIENT_ID=hedgedoc
@@ -38,9 +39,10 @@ services:
       - CMD_DEFAULT_PERMISSION=limited
       - CMD_ALLOW_PDF_EXPORT=true
       - CMD_SESSION_LIFE=1209600000
+      - CMD_COOKIE_POLICY=strict
     volumes:
       - ./config.json:/home/hackmd/app/config.json
-      - /srv/data/codimd/persistuploads:/home/hackmd/app/public/uploads
+      - /srv/data/codimd/persistuploads:/hedgedoc/public/uploads
     networks:
       backend:
         ipv4_address: 10.0.2.3
