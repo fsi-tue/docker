@@ -3,7 +3,7 @@ services:
   proxy:
     container_name: proxy
     build: .
-    image: 'fsinf/proxy:latest'
+    image: haproxy:lts-alpine
     restart: always
     hostname: 'proxy.fsi.uni-tuebingen.de'
     ports:
