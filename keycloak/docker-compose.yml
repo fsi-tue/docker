@@ -49,4 +49,5 @@ services:
       - ./nginx-keycloak.conf:/etc/nginx/sites-enabled/nginx-keycloak.conf
       - /srv/docker/shared/nginx/ssl.conf:/etc/nginx/shared/ssl.conf:ro
       - /srv/docker/shared/nginx/security-headers.conf:/etc/nginx/shared/security-headers.conf:ro
+      - ./index.html:/var/www/keycloak/index.html
     restart: always
