@@ -9,6 +9,7 @@ services:
     ports:
       - '134.2.220.61:80:80'
       - '134.2.220.61:443:443'
+      - '127.0.0.1:8404:8404'
     volumes:
       # reload the config when it was changed by typing 
       # sudo docker kill -s HUP proxy
