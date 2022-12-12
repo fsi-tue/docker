@@ -9,6 +9,6 @@ for file in $(find -name docker-compose.yml); do
   pushd $(dirname $file)
 
   docker-compose pull --ignore-pull-failures
-  docker-compose up -d --build
+  docker-compose up -d --build --no-cache
   popd
 done
