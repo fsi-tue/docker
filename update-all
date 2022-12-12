@@ -8,12 +8,6 @@ cd $(dirname $0)
 for file in $(find -name docker-compose.yml); do
   pushd $(dirname $file)
 
-  # the files for Jitsi are in jitsi-meet-git, jitsi-meet is only the original files that are tracked with this git repositoy
-  if [[ $PWD == *jitsi-meet ]]; then
-    popd
-    continue
-  fi
-
   docker-compose pull --ignore-pull-failures
   docker-compose up -d --build
   popd
