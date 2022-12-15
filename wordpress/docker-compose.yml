@@ -1,0 +1,61 @@
+version: '3'
+
+networks:
+  backend:
+     ipam:
+       config:
+         - subnet: 10.0.151.0/24
+
+
+services:
+  database:
+    container_name: wordpress_database
+    image: mariadb:latest
+    env_file:
+      - .env_database
+    volumes:
+      - /srv/data/wordpress/database:/var/lib/mysql
+      # backing up the whole database because it's easier to rollback (every 4 hours) than from the backup (every 24 hours)
+      # also as an replacement for git
+      # git gc (garbage-collect) does a good job of compressing and removing the duplicates
+      - /srv/data/wordpress/database_git:/var/database_git
+    networks:
+       backend:
+         ipv4_address: 10.0.151.3
+    restart: always
+  wordpress:
+    container_name: wordpress_container
+    image: fsinf/wordpress-fpmalpine-apcu-wpcli
+    build: .
+    volumes:
+      - /srv/data/wordpress/data:/var/www/html
+      - ./upload.ini:/usr/local/etc/php/conf.d/uploads.ini
+    restart: always
+    depends_on:
+      - database
+    networks:
+      backend:
+        ipv4_address: 10.0.151.2
+  nginx:
+    container_name: wordpress_nginx
+    image: fsinf/nginx:latest
+    ports:
+      - 8443:443
+    volumes:
+      - /srv/data/wordpress/data:/var/www/html
+      - /srv/docker-certificates/wiki.fsi.uni-tuebingen.de/:/etc/nginx/ssl:ro
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx-wordpress.conf:/etc/nginx/sites-enabled/nginx-wordpress.conf
+      - ./fastcgi_params:/etc/nginx/fastcgi_params
+      - /srv/docker/shared/nginx/ssl.conf:/etc/nginx/shared/ssl.conf:ro
+      - /srv/docker/shared/nginx/security-headers.conf:/etc/nginx/shared/security-headers.conf:ro
+      # the calendar iframe
+      - /srv/data/wordpress/modern-ical-embed:/var/www/html/modern-ical-embed
+      # self host because of privacy reasons
+      - /srv/data/wordpress/leaflet:/var/www/html/__leaflet/:ro
+      # self host because of privacy reasons
+      - /srv/data/wordpress/twemoji/assets/:/var/www/html/__emoji/:ro
+    restart: always
+    networks:
+      backend:
+        ipv4_address: 10.0.151.4
