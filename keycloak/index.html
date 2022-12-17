@@ -9,9 +9,37 @@
             text-align: center;
         }
 
-        .content {
-            padding-bottom: 2em;
+	.content {
+       	    padding-bottom: 2em;
+	    border-radius: 1em;
+	    min-height: 6em;
+	    margin-bottom: 2em;
         }
+
+	.content h2 {
+		margin-bottom: 1.5em;
+		text-decoration: underline;
+	}
+
+	.content a {
+		padding: 1em;
+		border: 1px solid #000080;
+		border-radius: 1em;
+		background-color: #000080;
+		color: #fff;
+	}
+
+	.content .notice {
+		margin-top: 2em;
+		font-style: italic;
+		border: 1px solid #E9D502;
+		background-color: #E9D502;
+		border-radius: 1em;
+		max-width: 30%;
+		margin-left: 35%;
+		min-height: 2em;
+		padding-top: 0.7em;
+	}
 
         img {
             max-width: 100%;
@@ -44,8 +72,8 @@
     <div class="content">
         <h2>Adminarea</h2>
         <a href="https://aai.fsi.uni-tuebingen.de/auth/admin/">Verwaltung aller Accounts, Realms und Keycloak
-            selbst</a><br>
-        <i>Nur mit Wireguard oder aus dem FSI Netz erreichbar</i>
+            selbst</a>
+        <p class="notice">Nur mit Wireguard oder aus dem FSI Netz erreichbar</p>
     </div>
 </body>
 
