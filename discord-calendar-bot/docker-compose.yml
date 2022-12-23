@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  bot:
+    container_name: discord-calendar-bot
+    build: /srv/data/discord-calendar-bot
+    image: fsinf/discord-calendar-bot
+    restart: always
