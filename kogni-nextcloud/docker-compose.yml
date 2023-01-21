@@ -12,7 +12,7 @@ services:
     restart: always
   app:
     container_name: fskogni_nextcloud_container
-    image: nextcloud:25
+    image: nextcloud:stable
     volumes:
       - /srv/data/fskogni/nextcloud/data:/var/www/html
       - ./php.ini:/usr/local/etc/php/conf.d/zzz-custom.ini
