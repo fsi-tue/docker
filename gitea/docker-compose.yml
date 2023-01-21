@@ -19,7 +19,7 @@ services:
 
   db:
     container_name: gitea_db
-    image: postgres:12-alpine
+    image: postgres:13-alpine
     restart: always
     env_file:
       - .env_database
