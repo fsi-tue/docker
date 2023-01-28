@@ -38,6 +38,7 @@ services:
       - CMD_ALLOW_FREEURL=true
       - CMD_DEFAULT_PERMISSION=limited
       - CMD_ALLOW_PDF_EXPORT=true
+      - CMD_SESSION_SECRET=${CMD_SESSION_SECRET}
       - CMD_SESSION_LIFE=1209600000
       - CMD_COOKIE_POLICY=strict
     volumes:
