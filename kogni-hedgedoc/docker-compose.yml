@@ -42,7 +42,6 @@ services:
       - CMD_ALLOW_PDF_EXPORT=true
       - CMD_SESSION_LIFE=2592000000
       - CMD_SESSION_SECRET=${CMD_SESSION_SECRET}
-      - NODE_EXTRA_CA_CERTS=/etc/ssl/certs/ISRG_Root_X1.pem
       - CMD_COOKIE_POLICY=strict
     volumes:
       - /srv/data/fskogni/hedgedoc/uploads:/hedgedoc/public/uploads
