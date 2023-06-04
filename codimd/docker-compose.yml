@@ -14,7 +14,7 @@ services:
     restart: always
 
   app:
-    image: quay.io/hedgedoc/hedgedoc:1.9.7
+    image: quay.io/hedgedoc/hedgedoc:1.9.8
     container_name: codimd_container
     environment:
       - CMD_DOMAIN=pad.fsi.uni-tuebingen.de
