@@ -1,4 +1,4 @@
-FROM wordpress:php8.1-fpm-alpine
+FROM wordpress:php8.2-fpm-alpine
 
 # add APCU for better performance
 RUN apk add --update --no-cache --virtual .build-dependencies $PHPIZE_DEPS \
