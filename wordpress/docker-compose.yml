@@ -10,7 +10,7 @@ networks:
 services:
   database:
     container_name: wordpress_database
-    image: mariadb:latest
+    image: mariadb:lts
     env_file:
       - .env_database
     volumes:

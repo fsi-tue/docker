@@ -30,7 +30,7 @@ services:
       - db
   db:
     container_name: ppi_db
-    image: mariadb:latest
+    image: mariadb:lts
     env_file:
       - .env
     volumes:

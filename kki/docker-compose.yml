@@ -27,7 +27,7 @@ services:
         links:
           - db
     db:
-        image: mariadb:10
+        image: mariadb:lts
         container_name: kki_db
         restart: always
         environment:
