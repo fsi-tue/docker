@@ -1,11 +1,37 @@
-version: '2'
+version: '3'
+
 services:
-  www-fs-kogni:
-    container_name: www-fs-kogni
-    build: .
-    image: 'fsinf/kogni-website:latest'
-    #restart: always
-    hostname: 'www.fs-kogni.fsi.uni-tuebingen.de'
+  database:
+    container_name: fskogni_wordpress_database
+    image: mariadb:lts
+    env_file:
+      - .env_database
+    volumes:
+      - /srv/data/fskogni/wordpress/database:/var/lib/mysql
+      # also see wordpress/docker-compose.yml#L18 @ 028a91674e153aa2b70192432342f723270a53c2
+      - /srv/data/fskogni/wordpress/database_git:/var/database_git
+    restart: always
+  wordpress:
+    container_name: fskogni_wordpress_container
+    image: fsinf/wordpress-fpmalpine-apcu-wpcli
+    build: ../wordpress/
+    volumes:
+      - /srv/data/fskogni/wordpress/data:/var/www/html
+      - ./upload.ini:/usr/local/etc/php/conf.d/uploads.ini
+    restart: always
+    env_file:
+      - .env_wordpress
+    depends_on:
+      - database
+  nginx:
+    container_name: fskogni_wordpress_nginx
+    image: fsinf/nginx:latest
     ports:
-      - '134.2.220.61:8002:80'
-      - '134.2.220.61:8003:443'
+      - 8468:80
+    volumes:
+      - /srv/data/fskogni/wordpress/data:/var/www/html
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx-wordpress.conf:/etc/nginx/sites-enabled/nginx-wordpress.conf
+      - ./fastcgi_params:/etc/nginx/fastcgi_params
+      - /srv/docker/shared/nginx/security-headers.conf:/etc/nginx/shared/security-headers.conf:ro
+    restart: always
