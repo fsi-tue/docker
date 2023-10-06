@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+set -o errexit
+set -o nounset
+
+cd $(dirname $0)
+
+# Specify a fixed list of folders here
+declare -a folders=(
+  "nextcloud"
+  "kogni-nextcloud"
+  # Add more folders as needed
+)
+
+for folder in "${folders[@]}"; do
+  # Check for both docker-compose.yml and docker-compose.yaml
+  for file in "$folder/docker-compose.yml" "$folder/docker-compose.yaml"; do
+    if [ -f "$file" ]; then
+      pushd $(dirname $file)
+      docker-compose pull --ignore-pull-failures
+      docker-compose up -d
+      popd
+      # Break out of the inner loop once one of the files is found to avoid duplicate operations
+      break
+    fi
+  done
+done
+
