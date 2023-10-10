@@ -22,7 +22,8 @@ services:
     restart: always
   app:
     container_name: nextcloud_container
-    image: nextcloud:stable
+    build: ./docker/27/apache/
+    image: git.fsi.uni-tuebingen.de/gitea_container-registry/nextcloud:stable
     environment:
       - REDIS_HOST=redis
     volumes:

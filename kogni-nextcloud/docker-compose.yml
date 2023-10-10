@@ -12,7 +12,7 @@ services:
     restart: always
   app:
     container_name: fskogni_nextcloud_container
-    image: nextcloud:stable
+    image: git.fsi.uni-tuebingen.de/gitea_container-registry/nextcloud:stable
     volumes:
       - /srv/data/fskogni/nextcloud/data:/var/www/html
       - ./php.ini:/usr/local/etc/php/conf.d/zzz-custom.ini
