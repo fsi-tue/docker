@@ -10,6 +10,13 @@ services:
       - POSTGRES_USER=keycloak
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     restart: always
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U",  "keycloak"]
+      interval: 30s
+      timeout: 2s
+      retries: 2
+      start_period: 10s
+
   keycloak:
     image: fsinf/keycloak:latest
     build: .
@@ -34,9 +41,17 @@ services:
     ports:
       - 8080:8080
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
     entrypoint: /opt/keycloak/bin/kc.sh start --optimized --spi-connections-jpa-legacy-migration-strategy=update
     restart: always
+    healthcheck:
+      test: grep '00000000:1F90 00000000:0000' /proc/net/tcp || exit 1
+      interval: 30s
+      timeout: 2s
+      retries: 2
+      start_period: 30s
+
   nginx:
     container_name: keycloak_nginx
     image: fsinf/nginx:latest
@@ -51,3 +66,12 @@ services:
       - /srv/docker/shared/nginx/security-headers.conf:/etc/nginx/shared/security-headers.conf:ro
       - ./index.html:/var/www/keycloak/index.html
     restart: always
+    depends_on:
+      keycloak:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "https://aai.fsi.uni-tuebingen.de/auth/health/ready"]
+      interval: 30s
+      timeout: 2s
+      retries: 2
+      start_period: 10s
