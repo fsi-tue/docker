@@ -1,10 +1,11 @@
-version: '3.6'
+version: "3.8"
 
 networks:
   backend:
     ipam:
       config:
         - subnet: 10.0.1.0/24
+          gateway: 10.0.1.1
 
 
 services:
@@ -32,7 +33,7 @@ services:
     build: ./docker/27/apache/
     image: git.fsi.uni-tuebingen.de/gitea_container-registry/nextcloud:stable
     environment:
-      - REDIS_HOST=redis
+      - REDIS_HOST=10.0.1.6
     volumes:
       - /srv/data/nextcloud/data:/var/www/html
       - ./php.ini:/usr/local/etc/php/conf.d/zzz-custom.ini
@@ -82,6 +83,9 @@ services:
           memory: 2g
     restart: always
     mem_limit: 2048M
+    networks:
+      backend:
+        ipv4_address: 10.0.1.6
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 30s
