@@ -43,7 +43,7 @@ services:
       backend:
         ipv4_address: 10.0.4.2
     healthcheck:
-      test: ["CMD", "curl", "-f", "https://fachschaftsempfaenger.fsi.uni-tuebingen.de"]
+      test: ["CMD", "curl", "-f", "--resolve", "fachschaftsempfaenger.fsi.uni-tuebingen.de:443:134.2.220.61", "https://fachschaftsempfaenger.fsi.uni-tuebingen.de"]
       interval: 30s
       timeout: 2s
       retries: 2
