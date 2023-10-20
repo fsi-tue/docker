@@ -21,6 +21,12 @@ services:
       backend:
         ipv4_address: 10.0.1.3
     restart: always
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U",  "${POSTGRES_USER}"]
+      interval: 30s
+      timeout: 2s
+      retries: 2
+      start_period: 10s
 
   app:
     container_name: nextcloud_container
@@ -37,6 +43,12 @@ services:
     networks:
       backend:
         ipv4_address: 10.0.1.2
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/status.php"]
+      interval: 30s
+      timeout: 1s
+      retries: 2
+      start_period: 10s
 
   nginx:
     container_name: nextcloud_nginx
@@ -55,6 +67,12 @@ services:
     networks:
       backend:
         ipv4_address: 10.0.1.4
+    healthcheck:
+      test: ["CMD", "curl", "-f", "https://cloud.fsi.uni-tuebingen.de/status.php"]
+      interval: 30s
+      timeout: 1s
+      retries: 2
+      start_period: 10s
 
   redis:
     container_name: nextcloud_redis
@@ -67,6 +85,12 @@ services:
     networks:
       backend:
         ipv4_address: 10.0.1.5
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 1s
+      retries: 2
+      start_period: 10s
 
   collabora:
     container_name: nextcloud_collabora
@@ -75,3 +99,9 @@ services:
     networks:
       backend:
         ipv4_address: 10.0.1.6
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/loleaflet/dist/admin/admin.html"]
+      interval: 2m
+      timeout: 10s
+      retries: 2
+      start_period: 1m

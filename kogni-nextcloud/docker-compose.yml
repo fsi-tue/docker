@@ -10,6 +10,13 @@ services:
     volumes:
       - /srv/data/fskogni/nextcloud/database:/var/lib/postgresql/data
     restart: always
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U",  "${POSTGRES_USER}"]
+      interval: 30s
+      timeout: 2s
+      retries: 2
+      start_period: 10s
+
   app:
     container_name: fskogni_nextcloud_container
     image: git.fsi.uni-tuebingen.de/gitea_container-registry/nextcloud:stable
@@ -24,6 +31,13 @@ services:
     restart: always
     depends_on:
       - database
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/status.php"]
+      interval: 30s
+      timeout: 1s
+      retries: 2
+      start_period: 10s
+
   nginx:
     container_name: fskogni_nextcloud_nginx
     image: fsinf/nginx:latest
@@ -35,7 +49,20 @@ services:
       - ./nginx-nextcloud.conf:/etc/nginx/sites-enabled/nginx-nextcloud.conf
       - /srv/docker/shared/nginx/security-headers.conf:/etc/nginx/shared/security-headers.conf:ro
     restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "https://www.fs-kogni.uni-tuebingen.de/cloud/status.php"]
+      interval: 30s
+      timeout: 1s
+      retries: 2
+      start_period: 10s
+
   redis:
     container_name: fskogni_nextcloud_redis
     image: redis:latest
     restart: always
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 1s
+      retries: 2
+      start_period: 10s
