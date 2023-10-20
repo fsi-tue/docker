@@ -16,6 +16,16 @@ services:
         links:
           - php
         restart: always
+        depends_on:
+          php:
+            condition: service_healthy
+        healthcheck:
+          test: ["CMD", "curl", "-f", "https://kki.fsi.uni-tuebingen.de"]
+          interval: 30s
+          timeout: 2s
+          retries: 2
+          start_period: 10s
+
     php:
         build: .
         image: fsinf/kki-php:latest
@@ -26,6 +36,16 @@ services:
         restart: always
         links:
           - db
+        depends_on:
+          db:
+            condition: service_healthy
+        healthcheck:
+          test: ["CMD", "pgrep", "php-fpm"]
+          interval: 30s
+          timeout: 2s
+          retries: 2
+          start_period: 10s
+
     db:
         image: mariadb:lts
         container_name: kki_db
@@ -37,3 +57,10 @@ services:
           - MYSQL_DATABASE=kneipenkulturinterface
         volumes:
           - /srv/data/kki/db:/var/lib/mysql
+          - ./.my-healthcheck.cnf:/healthcheck.cnf
+        healthcheck:
+          test: [ "CMD", "healthcheck.sh", "--defaults-extra-file=healthcheck.cnf", "--connect", "--innodb_initialized" ]
+          interval: 30s
+          timeout: 2s
+          retries: 2
+          start_period: 10s
