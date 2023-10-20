@@ -91,17 +91,3 @@ services:
       timeout: 1s
       retries: 2
       start_period: 10s
-
-  collabora:
-    container_name: nextcloud_collabora
-    image: collabora/code
-    restart: always
-    networks:
-      backend:
-        ipv4_address: 10.0.1.6
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost/loleaflet/dist/admin/admin.html"]
-      interval: 2m
-      timeout: 10s
-      retries: 2
-      start_period: 1m
