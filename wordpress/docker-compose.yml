@@ -19,10 +19,18 @@ services:
       # also as an replacement for git
       # git gc (garbage-collect) does a good job of compressing and removing the duplicates
       - /srv/data/wordpress/database_git:/var/database_git
+      - ./.my-healthcheck.cnf:/healthcheck.cnf
     networks:
        backend:
          ipv4_address: 10.0.151.3
     restart: always
+    healthcheck:
+      test: [ "CMD", "healthcheck.sh", "--defaults-extra-file=healthcheck.cnf", "--connect", "--innodb_initialized" ]
+      interval: 30s
+      timeout: 2s
+      retries: 2
+      start_period: 10s
+
   wordpress:
     container_name: wordpress_container
     image: fsinf/wordpress-fpmalpine-apcu-wpcli
@@ -31,11 +39,19 @@ services:
       - /srv/data/wordpress/data:/var/www/html
       - ./upload.ini:/usr/local/etc/php/conf.d/uploads.ini
     restart: always
-    depends_on:
-      - database
     networks:
       backend:
         ipv4_address: 10.0.151.2
+    depends_on:
+      database:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "pgrep", "php-fpm"]
+      interval: 30s
+      timeout: 2s
+      retries: 2
+      start_period: 10s
+
   nginx:
     container_name: wordpress_nginx
     image: fsinf/nginx:latest
@@ -59,3 +75,12 @@ services:
     networks:
       backend:
         ipv4_address: 10.0.151.4
+    depends_on:
+      wordpress:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-I", "-f", "https://www.fsi.uni-tuebingen.de/wp-json/wp/v2"]
+      interval: 30s
+      timeout: 2s
+      retries: 2
+      start_period: 10s
