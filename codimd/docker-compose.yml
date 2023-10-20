@@ -12,9 +12,16 @@ services:
       backend:
         ipv4_address: 10.0.2.4
     restart: always
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U",  "hackmd"]
+      interval: 30s
+      timeout: 2s
+      retries: 2
+      start_period: 10s
 
   app:
-    image: quay.io/hedgedoc/hedgedoc:1.9.9
+    image: git.fsi.uni-tuebingen.de/gitea_container-registry/hedgedoc:latest
+    build: .
     container_name: codimd_container
     environment:
       - CMD_DOMAIN=pad.fsi.uni-tuebingen.de
@@ -50,6 +57,12 @@ services:
     restart: always
     depends_on:
       - database
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/_health"]
+      interval: 30s
+      timeout: 1s
+      retries: 2
+      start_period: 10s
 
   nginx:
     image: fsinf/nginx:latest
@@ -67,6 +80,12 @@ services:
       backend:
         ipv4_address: 10.0.2.2
     restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "https://pad.fsi.uni-tuebingen.de/_health"]
+      interval: 30s
+      timeout: 1s
+      retries: 2
+      start_period: 10s
 
 networks:
   backend:
