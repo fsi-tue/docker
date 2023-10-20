@@ -46,7 +46,8 @@ services:
     entrypoint: /opt/keycloak/bin/kc.sh start --optimized --spi-connections-jpa-legacy-migration-strategy=update
     restart: always
     healthcheck:
-      test: grep '00000000:1F90 00000000:0000' /proc/net/tcp || exit 1
+      # https://github.com/keycloak/keycloak/issues/17273#issuecomment-1693549331
+      test: grep -q '00000000:1F90 00000000:0000' /proc/net/tcp
       interval: 30s
       timeout: 2s
       retries: 2
