@@ -1,11 +1,12 @@
-version: '2'
+version: '3.9'
 
 networks:
   backend:
-     ipam:
-       config:
-         - subnet: 10.0.1.0/24
-           gateway: 10.0.1.1
+    ipam:
+      config:
+        - subnet: 10.0.1.0/24
+          gateway: 10.0.1.1
+
 
 services:
   database:
@@ -17,9 +18,10 @@ services:
     volumes:
       - /srv/data/nextcloud/database:/var/lib/postgresql/data
     networks:
-       backend:
-         ipv4_address: 10.0.1.3
+      backend:
+        ipv4_address: 10.0.1.3
     restart: always
+
   app:
     container_name: nextcloud_container
     build: ./docker/27/apache/
@@ -35,11 +37,12 @@ services:
     networks:
       backend:
         ipv4_address: 10.0.1.2
+
   nginx:
     container_name: nextcloud_nginx
     image: fsinf/nginx:latest
     ports:
-      - 8090:443
+      - "8090:443"
     volumes:
       - /srv/data/nextcloud/data:/var/www/html
       - /srv/docker-certificates/cloud.fsi.uni-tuebingen.de/:/etc/nginx/ssl:ro
@@ -52,14 +55,19 @@ services:
     networks:
       backend:
         ipv4_address: 10.0.1.4
+
   redis:
     container_name: nextcloud_redis
     image: redis:latest
-    mem_limit: 2g
+    deploy:
+      resources:
+        limits:
+          memory: 2g
     restart: always
     networks:
       backend:
         ipv4_address: 10.0.1.5
+
   collabora:
     container_name: nextcloud_collabora
     image: collabora/code
