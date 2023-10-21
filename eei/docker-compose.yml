@@ -33,7 +33,7 @@ services:
             - /srv/data/eei/git:/var/www/html:ro
         restart: always
         healthcheck:
-            test: ["CMD", "pgrep", "php-fpm", "&&", "php", "healthcheck.php", "&&", "php", "index.php"]
+            test: ["CMD-SHELL", "pgrep php-fpm && php healthcheck.php && php index.php"]
             interval: 1m
             timeout: 2s
             retries: 2
