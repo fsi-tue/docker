@@ -15,6 +15,16 @@ services:
         links:
             - php
         restart: always
+        depends_on:
+            php:
+                condition: service_healthy
+        healthcheck:
+            test: ["CMD", "curl", "-f", "https://eei.fsi.uni-tuebingen.de/_nginx_health"]
+            interval: 30s
+            timeout: 2s
+            retries: 2
+            start_period: 10s
+
     php:
         image: php:8.1-fpm-alpine
         user: www-data
@@ -22,3 +32,9 @@ services:
             - /srv/data/eei/eei-registration:/var/www/eei-registration
             - /srv/data/eei/git:/var/www/html:ro
         restart: always
+        healthcheck:
+            test: ["CMD", "pgrep", "php-fpm", "&&", "php", "healthcheck.php", "&&", "php", "index.php"]
+            interval: 1m
+            timeout: 2s
+            retries: 2
+            start_period: 10s
