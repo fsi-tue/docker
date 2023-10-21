@@ -16,6 +16,16 @@ services:
     restart: always
     links:
       - php
+    depends_on:
+      php:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "https://ppi.fsi.uni-tuebingen.de"]
+      interval: 30s
+      timeout: 2s
+      retries: 2
+      start_period: 10s
+
   php:
     # MYSQL drivers, zip and sendmail are required
     build: .
@@ -28,6 +38,16 @@ services:
     restart: always
     links:
       - db
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "pgrep", "php-fpm"]
+      interval: 30s
+      timeout: 2s
+      retries: 2
+      start_period: 10s
+
   db:
     container_name: ppi_db
     image: mariadb:lts
@@ -35,4 +55,11 @@ services:
       - .env
     volumes:
       - /srv/data/ppi/database:/var/lib/mysql
+      - ./.my-healthcheck.cnf:/healthcheck.cnf
     restart: always
+    healthcheck:
+      test: [ "CMD", "healthcheck.sh", "--defaults-extra-file=healthcheck.cnf", "--connect", "--innodb_initialized" ]
+      interval: 30s
+      timeout: 2s
+      retries: 2
+      start_period: 10s
