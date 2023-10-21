@@ -1,4 +1,5 @@
-version: '2'
+version: '3.6'
+
 services:
   proxy:
     container_name: http-redir
@@ -6,7 +7,7 @@ services:
     image: 'fsinf/http-redir:latest'
     restart: always
     ports:
-            - '134.2.220.61:8100:80'
+      - '134.2.220.61:8100:80'
     healthcheck:
       test: ["CMD", "curl", "-f", "http://cloud.fsi.uni-tuebingen.de/_nginx_health"]
       interval: 30s
