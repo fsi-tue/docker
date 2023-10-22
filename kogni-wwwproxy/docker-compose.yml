@@ -11,11 +11,10 @@ services:
       - /srv/docker-certificates/www.fs-kogni.uni-tuebingen.de_ecc/:/etc/nginx/ssl-ecc
       - ./nginx-wwwproxy.conf:/etc/nginx/sites-enabled/nginx-wwwproxy.conf
       - ./nginx.conf:/etc/nginx/nginx.conf
-      - /srv/docker/shared/nginx/ssl.conf:/etc/nginx/shared/ssl.conf
-      - /srv/docker/shared/nginx/security-headers.conf:/etc/nginx/shared/security-headers.conf:ro
+      - /srv/docker/shared/nginx/:/etc/nginx/shared/
     restart: always
     healthcheck:
-      test: ["CMD", "curl", "-f", "https://www.fs-kogni.uni-tuebingen.de/_health"]
+      test: ["CMD", "curl", "-f", "https://www.fs-kogni.uni-tuebingen.de/_nginx_health"]
       interval: 30s
       timeout: 2s
       retries: 2

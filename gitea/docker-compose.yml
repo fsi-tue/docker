@@ -51,14 +51,13 @@ services:
      - /srv/docker-certificates/git.fsi.uni-tuebingen.de_ecc/:/etc/nginx/ssl-ecc:ro
      - ./nginx.conf:/etc/nginx/nginx.conf:ro
      - ./nginx-gitea.conf:/etc/nginx/sites-enabled/nginx-codimd.conf:ro
-     - /srv/docker/shared/nginx/ssl.conf:/etc/nginx/shared/ssl.conf:ro
-     - /srv/docker/shared/nginx/security-headers.conf:/etc/nginx/shared/security-headers.conf:ro
+     - /srv/docker/shared/nginx/:/etc/nginx/shared/:ro
    networks:
      backend:
        ipv4_address: 10.0.3.2
    restart: always
    healthcheck:
-      test: ["CMD", "curl", "-f", "https://git.fsi.uni-tuebingen.de"]
+      test: ["CMD", "curl", "-f", "https://git.fsi.uni-tuebingen.de/_nginx_health"]
       interval: 30s
       timeout: 1s
       retries: 2

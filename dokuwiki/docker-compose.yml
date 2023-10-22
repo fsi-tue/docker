@@ -13,7 +13,7 @@ services:
       - /srv/docker-certificates/wiki.fsi.uni-tuebingen.de_ecc/:/etc/nginx/ssl-ecc
       - ./nginx-dokuwiki.conf:/etc/nginx/sites-enabled/nginx-dokuwiki.conf
       - ./nginx.conf:/etc/nginx/nginx.conf
-      - /srv/docker/shared/nginx/ssl.conf:/etc/nginx/shared/ssl.conf
+      - /srv/docker/shared/nginx/:/etc/nginx/shared/
     restart: always
     healthcheck:
       test: ["CMD", "curl", "-f", "https://wiki.fsi.uni-tuebingen.de/_nginx_health"]

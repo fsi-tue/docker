@@ -49,13 +49,13 @@ services:
       - ./nginx.conf:/etc/nginx/nginx.conf
       - ./nginx-wordpress.conf:/etc/nginx/sites-enabled/nginx-wordpress.conf
       - ./fastcgi_params:/etc/nginx/fastcgi_params
-      - /srv/docker/shared/nginx/security-headers.conf:/etc/nginx/shared/security-headers.conf:ro
+      - /srv/docker/shared/nginx/:/etc/nginx/shared/:ro
     restart: always
     depends_on:
       wordpress:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "curl", "-I", "-f", "https://www.fs-kogni.uni-tuebingen.de/wp-json/wp/v2"]
+      test: ["CMD", "curl", "-I", "-f", "http://localhost/_nginx_health"]
       interval: 30s
       timeout: 2s
       retries: 2
