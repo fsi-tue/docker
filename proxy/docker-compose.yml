@@ -3,7 +3,7 @@ services:
   proxy:
     container_name: proxy
     build: .
-    image: haproxy:lts-alpine
+    image: git.fsi.uni-tuebingen.de/gitea_container-registry/haproxy:lts-alpine
     restart: always
     hostname: 'proxy.fsi.uni-tuebingen.de'
     ports:
@@ -17,6 +17,12 @@ services:
       # reload the config when it was changed by typing 
       # sudo docker kill -s HUP proxy
       - ./config/:/usr/local/etc/haproxy/
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8404"]
+      interval: 30s
+      timeout: 2s
+      retries: 2
+      start_period: 10s
 
 networks:
   proxy:
