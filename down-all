@@ -7,6 +7,6 @@ cd $(dirname $0)
 
 for file in $(find -name docker-compose.yml); do
   pushd $(dirname $file)
-  docker-compose down
+  docker compose down
   popd
 done

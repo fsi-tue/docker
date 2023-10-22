@@ -8,7 +8,7 @@ cd $(dirname $0)
 for file in $(find -name docker-compose.yml); do
   pushd $(dirname $file)
 
-  docker-compose pull --ignore-pull-failures
-  docker-compose up -d --build --no-cache
+  docker compose pull --ignore-pull-failures
+  docker compose up -d --build --no-cache
   popd
 done

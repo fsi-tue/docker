@@ -17,8 +17,8 @@ for folder in "${folders[@]}"; do
   for file in "$folder/docker-compose.yml" "$folder/docker-compose.yaml"; do
     if [ -f "$file" ]; then
       pushd $(dirname $file)
-      docker-compose pull --ignore-pull-failures
-      docker-compose up -d
+      docker compose pull --ignore-pull-failures
+      docker compose up -d
       popd
       # Break out of the inner loop once one of the files is found to avoid duplicate operations
       break
