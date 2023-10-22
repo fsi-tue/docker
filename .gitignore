@@ -3,3 +3,6 @@
 
 # environment files (e.g. for docker-compose)
 .env*
+
+# files needed to do healthchecks without root on mariadb/mysql databases
+.my-healthcheck.cnf
