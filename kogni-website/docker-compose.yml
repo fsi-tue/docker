@@ -55,7 +55,7 @@ services:
       wordpress:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "curl", "-I", "-f", "http://localhost/_nginx_health"]
+      test: ["CMD", "curl", "-f", "--resolve", "www.fs-kogni.uni-tuebingen.de:80:127.0.0.1", "http://www.fs-kogni.uni-tuebingen.de/_nginx_health"]
       interval: 30s
       timeout: 2s
       retries: 2

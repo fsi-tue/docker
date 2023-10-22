@@ -50,7 +50,7 @@ services:
       - /srv/docker/shared/nginx/:/etc/nginx/shared/:ro
     restart: always
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost/_nginx_health"]
+      test: ["CMD", "curl", "-f", "--resolve", "www.fs-kogni.uni-tuebingen.de:80:127.0.0.1", "http://www.fs-kogni.uni-tuebingen.de/_nginx_health"]
       interval: 30s
       timeout: 1s
       retries: 2
