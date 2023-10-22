@@ -21,7 +21,8 @@ services:
       start_period: 10s
 
   app:
-    image: hackmdio/hackmd:2.4.2
+    image: git.fsi.uni-tuebingen.de/gitea_container-registry/hackmdio_hackmd:2.4.2
+    build: .
     container_name: codimd_public_container
     environment:
       - CMD_DOMAIN=notes.fsi.uni-tuebingen.de
