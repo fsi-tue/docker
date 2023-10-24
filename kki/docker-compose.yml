@@ -30,6 +30,7 @@ services:
         image: fsinf/kki-php:latest
         container_name: kki_php
         user: www-data
+        working_dir: /var/www/data
         volumes:
           - /srv/data/kki/data:/var/www/data:ro
         restart: always
