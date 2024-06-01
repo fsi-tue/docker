@@ -30,7 +30,7 @@ services:
 
   app:
     container_name: nextcloud_container
-    build: ./docker/27/apache/
+    build: ./docker/29/apache/
     image: git.fsi.uni-tuebingen.de/gitea_container-registry/nextcloud:stable
     environment:
       - REDIS_HOST=10.0.1.6
