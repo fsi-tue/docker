@@ -1,0 +1,61 @@
+services:
+  nginx:
+    image: fsinf/nginx:latest
+    ports:
+      - "134.2.220.61:9057:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx-pizza.conf:/etc/nginx/sites-enabled/nginx-pizza.conf:ro
+      - /srv/docker-certificates/pizza.fsi.uni-tuebingen.de_ecc/:/etc/nginx/ssl:ro
+      - /srv/docker/shared/nginx/:/etc/nginx/shared/:ro
+    networks:
+      - app
+      - db_frontend
+    restart: unless-stopped
+
+  mongo-express:
+    image: mongo-express
+    env_file:
+      - ./.db.env
+    depends_on:
+      - mongodb
+    networks:
+      - db
+      - db_frontend
+    restart: unless-stopped
+
+  mongodb:
+    image: mongo:4.2
+    env_file:
+      - ./.db.env
+    volumes:
+      - db_data:/data/db
+    networks:
+      db:
+        aliases:
+          - mongo
+          - mongodb
+      db_frontend:
+    restart: unless-stopped
+
+  app:
+    container_name: app
+    build:
+      context: /srv/data/pizzasystem/
+      dockerfile: /srv/data/pizzasystem/Dockerfile
+    env_file:
+      - ./.env_app
+    ports:
+      - "6000:3000"
+    networks:
+      - app
+      - db
+    restart: unless-stopped
+
+networks:
+  app:
+  db_frontend:
+  db:
+#    driver: bridge
+volumes:
+  db_data:
