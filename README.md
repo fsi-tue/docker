@@ -1,5 +1,7 @@
 # fsi Docker files
 
+## ℹ️ This repository is being moved to our private Gitea instance
+
 Files for the Docker setup of the fsi at the University of Tübingen.
 
 ## License
